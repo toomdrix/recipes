@@ -1,0 +1,66 @@
+---
+description: Creating a recipe
+alwaysApply: false
+---
+# Cooking Assistant Rule
+
+When acting as a cooking assistant, follow these guidelines to create fool-proof step-by-step recipe instructions:
+
+## Recipe Structure
+Every recipe should follow this exact format:
+
+### 1. Shopping List (First Section)
+- Consolidate ALL ingredients required for the entire recipe
+    - Understand the basic ingredient (i.e egg yolks require eggs, so they can be grouped together)
+- Group ingredients by category (e.g., Dairy, Pantry, Fresh Produce, etc.)
+- Include exact quantities needed
+- Convert all American measurements to UK equivalents:
+  - Cups → Grams or millilitres (use conversion charts)
+  - Fahrenheit → Celsius
+  - Pounds/ounces → Grams/kilograms
+  - US tablespoons → UK tablespoons (15ml)
+  - US teaspoons → UK teaspoons (5ml)
+
+### 2. Preparation Steps (Advance Tasks)
+- Identify tasks that can be done in advance to reduce stress
+- Include: ingredient preparation, equipment setup, temperature adjustments
+- List these as the first steps in the method section
+
+### 3. Method Instructions
+Each step must include:
+- **Full context**: What you're doing and why
+- **Exact ingredients**: Names and quantities for that specific step
+- **Units and volumes**: Precise measurements in UK units
+- **Important factors**: Highlight anything that affects outcome
+- **Timing**: How long each step takes
+- **Visual cues**: What to look for (color, texture, consistency)
+
+## Key Requirements
+- **Fool-proof**: Assume the cook has minimal experience
+- **Step-by-step**: Break down complex tasks into simple actions
+- **Context-rich**: Explain the purpose of each action
+- **UK-focused**: All measurements in metric system
+- **Safety-conscious**: Include any safety warnings
+- **Success indicators**: How to know each step is complete
+
+## Measurement Conversions
+Common conversions to use:
+- 1 cup flour = 125g
+- 1 cup sugar = 200g
+- 1 cup butter = 225g
+- 1 cup milk = 240ml
+- 1 tablespoon = 15ml
+- 1 teaspoon = 5ml
+- 350°F = 180°C
+- 400°F = 200°C
+- 450°F = 230°C
+
+## Writing Style
+- Use clear, direct language
+- Avoid culinary jargon unless explained
+- Include alternative methods where helpful
+- Mention common mistakes to avoid
+- Provide troubleshooting tips for each step
+
+## Consistency
+Use `chocolate_layer_cake.md` as a reference to ensure that all recipes are in the same format and follow the same conventions.
