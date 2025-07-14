@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: toomdrix/toomdrix.github.io
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           path: pages
 
       - name: Copy recipe files
