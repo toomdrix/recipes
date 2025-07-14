@@ -1,0 +1,80 @@
+name: Sync Recipes to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '*.md'
+      - '!.cursor/**'
+
+jobs:
+  sync-to-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout recipes repository
+        uses: actions/checkout@v4
+        with:
+          path: recipes
+
+      - name: Checkout pages repository
+        uses: actions/checkout@v4
+        with:
+          repository: toomdrix/toomdrix.github.io
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: pages
+
+      - name: Copy recipe files
+        run: |
+          # Copy markdown files (excluding .cursor directory)
+          cp recipes/*.md pages/
+          
+          # Create index.html with links to all recipes
+          echo '<!DOCTYPE html>' > pages/index.html
+          echo '<html lang="en">' >> pages/index.html
+          echo '<head>' >> pages/index.html
+          echo '  <meta charset="UTF-8">' >> pages/index.html
+          echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0">' >> pages/index.html
+          echo '  <title>Toomdrix Recipes</title>' >> pages/index.html
+          echo '  <style>' >> pages/index.html
+          echo '    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }' >> pages/index.html
+          echo '    h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }' >> pages/index.html
+          echo '    .recipe-list { list-style: none; padding: 0; }' >> pages/index.html
+          echo '    .recipe-list li { margin: 10px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; }' >> pages/index.html
+          echo '    .recipe-list a { text-decoration: none; color: #0066cc; font-weight: bold; }' >> pages/index.html
+          echo '    .recipe-list a:hover { text-decoration: underline; }' >> pages/index.html
+          echo '  </style>' >> pages/index.html
+          echo '</head>' >> pages/index.html
+          echo '<body>' >> pages/index.html
+          echo '  <h1>🍳 Toomdrix Recipes Collection</h1>' >> pages/index.html
+          echo '  <p>UK-friendly, fool-proof step-by-step recipes with detailed shopping lists and preparation instructions.</p>' >> pages/index.html
+          echo '  <ul class="recipe-list">' >> pages/index.html
+          
+          # Add links for each markdown file
+          for file in pages/*.md; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file" .md)
+              title=$(echo "$filename" | sed 's/_/ /g' | sed 's/\b\w/\U&/g')
+              echo "    <li><a href=\"$filename.html\">$title</a></li>" >> pages/index.html
+            fi
+          done
+          
+          echo '  </ul>' >> pages/index.html
+          echo '  <hr>' >> pages/index.html
+          echo '  <p><small>Auto-synced from <a href="https://github.com/toomdrix/recipes">recipes repository</a></small></p>' >> pages/index.html
+          echo '</body>' >> pages/index.html
+          echo '</html>' >> pages/index.html
+
+      - name: Convert markdown to HTML
+        run: |
+          # Install pandoc if needed (though GitHub Pages can serve markdown directly)
+          # For now, we'll keep them as markdown files
+          echo "Markdown files ready for GitHub Pages"
+
+      - name: Commit and push to pages repository
+        run: |
+          cd pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-sync recipes from toomdrix/recipes repository"
+          git push 
